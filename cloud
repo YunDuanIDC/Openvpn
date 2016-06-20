@@ -1,0 +1,156 @@
+#!/bin/bash
+    PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+	export PATH
+echo ""
+echo "#############################################################"
+# FILES  ******************************************************************
+IP=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
+#Finnish  *****************************************************************
+echo "# Auto Install vpn流控 for CentOS 6.7     #"
+echo "# System      Required: CentOS 6.7        #"
+echo "# Intro:      官网:janch.ydidc.top        #"
+echo "# Author:      Janch<QQ2627000659>        #"
+echo "# BY:        云端互联信息科技有限公司     #"
+echo "#############################################################"
+echo ""
+echo -e 请输入正确的授权码
+read PASSWD
+key2=$PASSWD
+if [[ ${key2%%\ *} == janch.top ]]
+    then
+echo -e next
+else
+exit
+fi
+
+if [[ $EUID -ne 0 ]]; then
+    echo "Error:This script must be run as root!"
+    exit 1
+fi
+
+cur_dir=`pwd`
+clear
+echo ""
+echo "#############################################################"
+echo "# Auto Install vpn流控 for CentOS 6.7     #"
+echo "# System      Required: CentOS 6.7        #"
+echo "# Intro:         官网:janch.ydidc.top     #"
+echo "# Author:      Janch<QQ2627000659>        #"
+echo "# BY:        云端互联信息科技有限公司     #"
+echo "#############################################################"
+echo ""
+
+function install_all(){
+	echo "About install lnmp+Flow";
+# About install lnmp+Flow
+yum -y install net-tools make libpcap iptables gcc-c++ logrotate tar cpio perl pam tcp_wrappers dkms unzip
+mkdir -p /mnt/index1
+cd /mnt/index1
+# install lnmp
+wget https://api.ydidc.top/janch/lnmp.zip
+unzip lnmp.zip
+chmod +x ./lanmp.sh
+sh lanmp.sh
+rm -rf *
+cd /mnt/index1
+echo "-A INPUT -p tcp -m tcp --dport 8888 -j ACCEPT" >>/etc/sysconfig/iptables
+sed -i 's/listen       80;/listen       8888;/' /www/wdlinux/nginx/conf/vhost/00000.default.conf
+service iptables restart
+service nginxd restart
+mkdir -p /mnt/index1/sh
+cd /mnt/index1/sh
+wget https://api.ydidc.top/janch/sh.zip
+unzip ./sh.zip
+unalias cp
+cp -r -f * /etc/openvpn
+rm -rf *
+mkdir -p /mnt/index1/wwwroot
+cd /mnt/index1/wwwroot
+wget https://api.ydidc.top/janch/wwwroot.zip
+unzip wwwroot.zip
+cp -r -f * /www/web/default
+cd /www/web/default/
+rm -rf ./wwwroot.zip
+chmod +x /etc/openvpn/login.sh
+chmod +x /etc/openvpn/connect.sh
+chmod +x /etc/openvpn/disconnect.sh
+chmod 777 /www/web/default/res/openvpn-status.txt
+mkdir -p /mnt/index1/sql
+cd /mnt/index1/sql
+wget https://api.ydidc.top/janch/sql.zip
+unzip sql.zip
+mysql -uroot -prootroot -e "CREATE DATABASE IF NOT EXISTS ov DEFAULT CHARSET utf8 COLLATE utf8_general_ci;"
+mysql -u root -prootroot ov < ./ov.sql
+rm -rf *
+rm -rf /mnt/index1
+vpn
+
+echo ""
+echo "openvpn service is installed."
+echo "ServerIP:$IP"
+echo "port:8888"
+echo "Password:rootroot"
+}
+
+function install_lanmp(){
+cd /mnt/index1
+wget https://api.ydidc.top/janch/lnmp.zip
+unzip lnmp.zip
+chmod +x ./lanmp.sh
+sh lanmp.sh
+rm -rf *
+cd /mnt/index1
+}
+
+function Port_modification(){
+echo "-A INPUT -p tcp -m tcp --dport 8888 -j ACCEPT" >>/etc/sysconfig/iptables
+sed -i 's/listen       80;/listen       8888;/' /www/wdlinux/nginx/conf/vhost/00000.default.conf
+service iptables restart
+service nginxd restart
+}
+
+function web_import(){
+mkdir -p /mnt/index1/sh
+cd /mnt/index1/sh
+wget https://api.ydidc.top/janch/sh.zip
+unzip ./sh.zip
+unalias cp
+cp -r -f * /etc/openvpn
+rm -rf *
+rm -rf /etc/openvpn/sh.zip
+mkdir -p /mnt/index1/wwwroot
+cd /mnt/index1/wwwroot
+wget https://api.ydidc.top/janch/wwwroot.zip
+unzip wwwroot.zip
+rm -rf /www/web/default/*
+cp -r -f * /www/web/default
+rm -rf /www/web/default/wwwroot.zip
+}
+
+function sql(){
+mkdir -p /mnt/index1/sql
+cd /mnt/index1/sql
+wget https://api.ydidc.top/janch/sql.zip
+unzip sql.zip
+mysql -uroot -prootroot -e "CREATE DATABASE IF NOT EXISTS ov DEFAULT CHARSET utf8 COLLATE utf8_general_ci;"
+mysql -u root -prootroot ov < ./ov.sql
+rm -rf *
+rm -rf /mnt/index1
+}
+
+echo "which do you want to?input the number."
+echo "1. 安装所有"
+echo "2. 安装-lanmp"
+echo "3. Port_modification"
+echo "4. web_import"
+echo "5. sql"
+read num
+
+case "$num" in
+[1] ) (install_all);;
+[2] ) (install_lanmp);;
+[3] ) (Port_modification);;
+[4] ) (web_import);;
+[5] ) (sql);;
+*) echo "nothing,exit";;
+esac
