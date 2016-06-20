@@ -17,3 +17,12 @@ echo "=============开始执行安装============="
 echo "======================================"
 
 bash serverSpeeder_setup.sh
+
+#安装完成
+  echo "---------------- Thanks For"
+	echo "Huanmeng : https://github.com/HuanMeng0/ServerSpeederCrackScript (gayhub)"
+	echo "Diaoji : Optimization the install step and script "
+	echo " - http://vm.ydidc.top"
+	echo " - https://www.ydidc.top"
+	echo " - http://www.openvzvps.cc"
+	echo " - http://myhost.ifdream.net"
