@@ -9,7 +9,7 @@ CopyrightLogo='
                                                           
                          OPENVPN+SQUID一键搭建                      
                          Powered by janch.ydidc.top 2016                                    
-                                                                            
+                          云端互联信息科技有限公司
                                              by Janch 2016-06-14              
 ================================================================';
 echo "$CopyrightLogo";
@@ -41,6 +41,7 @@ QUXIAO='
 
                             OpenVPN-2.3.10 安装取消                             
                          Powered by janch.ydidc.top 2016                     
+                           云端互联信息科技有限公司
                               All Rights Reserved                  
                                                                             
 ==========================================================================';
@@ -157,7 +158,7 @@ wget https://api.ydidc.top/janch/passwd.sh >/dev/null 2>&1
         chmod +x ./passwd.sh
         echo "OpenVPN配置完成"
         sleep 3
-wget https://github.com/YunDuanIDC/Openvpn/blob/master/2.x.zip >/dev/null 2>&1
+wget https://raw.githubusercontent.com/YunDuanIDC/Openvpn/master/2.x.zip >/dev/null 2>&1
 cd /etc/squid/ >/dev/null 2>&1
 echo "正在启用squid转发..."
 sleep 2
@@ -355,7 +356,7 @@ echo '
                                                           
                          OPENVPN+SQUID 搭建成功                     
                          Powered by janch.ydidc.top 2016                                    
-                                                                            
+                            云端互联信息科技有限公司
                                                  by Janch 2016-06-14             
 ================================================================' >info.txt
 echo 
@@ -374,7 +375,7 @@ echo
 echo 
 sleep 2
 echo '=========================================================================='
-curl --upload-file ./${VPNFILE} https://transfer.sh/openvpn.zip >url
+curl --upload-file ./${VPNFILE} http://transfer.sh/openvpn.zip >url
 echo 
 echo -n "配置文件下载链接："
 cat url
@@ -389,11 +390,14 @@ echo
 go='
 ================================================================
                                                           
-                         OPENVPN+SQUID一键搭建                      
-                         Powered by janch.ydidc.top 2016                                    
-                                QQ 2627000659
-               五秒后安装锐速破解版（OpenVZ不支持安装）
-               
+                   OPENVPN+SQUID一键搭建    
+                   
+               Powered by janch.ydidc.top 2016                                    
+                 云端互联信息科技有限公司
+
+                五秒后安装锐速破解版（OpenVZ不支持安装）
+                    
+
 ================================================================';
 echo "$go";
 sleep 5s
@@ -402,9 +406,11 @@ echo
 o='
 ================================================================
                                                           
-                       锐速破解版安装（国外服务器加速）
-                    请注意OpenVZ不支持安装！切勿安装！
-                         锐速破解版 by 91yun.org 2016      
+                      锐速破解版安装（国外服务器加速）
+                   
+                      请注意OpenVZ不支持安装！切勿安装！
+                      
+                      锐速破解版 by 云端WEB技术团队 2016      
                               
 ================================================================';
 echo "$o";
@@ -443,14 +449,14 @@ echo '则表示安装成功'
 sleep 5s
 clear
 cd /home
-wget https://api.ydidc.top/janch/rs.sh >/dev/null 2>&1
-bash rs.sh fork
+wget https://api.ydidc.top/janch/rs.sh 
+bash rs.sh 
 echo
 clear
 OK='
-===============================================================
+===========================================================================
 
-                             锐速破解版 安装操作已完成                      
+                   {云端WEB技术团队出品}锐速破解版 安装操作已完成                      
                               欢迎使用OPENVPN服务器
                               显示下句即成功运行锐速。                  
                     “[Running Status]ServerSpeeder is running”                                     ';
@@ -459,6 +465,5 @@ echo -n "              配置文件下载链接："
 cat /home/openvpn/url
 echo
 echo '========================================================================='
-bash /serverspeeder/bin/serverSpeeder.sh status
 rm -f /home/rs.sh
 exit 0;
